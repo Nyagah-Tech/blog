@@ -53,4 +53,6 @@ class Blog(db.Model):
 
     @classmethod
     def get_all_blog(cls):
-        blod_list = Blog.query.all()
+        blog_list = Blog.query.all()
+
+        return blog_list

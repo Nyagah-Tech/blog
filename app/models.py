@@ -50,3 +50,7 @@ class Blog(db.Model):
         blog = Blog.query.filter_by(user = name)
 
         return blog
+
+    @classmethod
+    def get_all_blog(cls):
+        blod_list = Blog.query.all()

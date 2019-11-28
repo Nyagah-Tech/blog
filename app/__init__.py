@@ -1,8 +1,10 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from config import config_options
+from flsk_sqlalchemy import SQLAlchemy
 
 bootstrap = Bootstrap()
+db = SQLAlchemy()
 
 def create _app(config_name):
     app = Flask(__name__)
@@ -12,6 +14,7 @@ def create _app(config_name):
 
     # intilizing flask extensions
     bootstrap.init_app(app)
+    db.init_app(app)
 
     # configure uploadset
 

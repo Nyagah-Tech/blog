@@ -4,13 +4,13 @@ class Config:
 
     pass
 
-class prodConfig(Config):
+class ProdConfig(Config):
     pass
 
 class DevConfig(Config):
     DEBUD = True
 
 config_options = {
-    'development' = DevConfig,
-    'production' = ProdConfig
+    'development':DevConfig,
+    'production':ProdConfig
 }

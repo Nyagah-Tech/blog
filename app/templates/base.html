@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% extends 'bootstrap/base.html'%}
+{% extends 'bootstrap/base.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,66 +8,23 @@
     <link href=" {{url_for('static',filename='css/bootstrap.css')}} ">
     <title>pitch</title>
 
-    <style>
-        body {
-            margin: 0;
-        }
-        
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            width: 25%;
-            background-color: #f1f1f1;
-            position: fixed;
-            height: 100%;
-            overflow: auto;
-        }
-        
-        li a {
-            display: block;
-            color: #000;
-            padding: 8px 16px;
-            text-decoration: none;
-        }
-        
-        li a.active {
-            background-color: #4CAF50;
-            color: white;
-        }
-        
-        li a:hover:not(.active) {
-            background-color: #555;
-            color: white;
-        }
-        
-    </style>
+    
 </head>
 <body>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="nav">
-                <ul>
-                    <li><a href="">PitchApp</a></li>
-                    
-                    <li><a class="active" href="/">Home</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#about">About</a></li>
-                    {% if current_user.is_authenticated%}
-                    <li style="color:black;padding: 15px;">{{current_user.username}}</li>
-                    <li> <a href="{{url_for('main.profile',uname = current_user.username)}}">Profile</a> </li>
-                    <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
-                    {% else%}
-                    <li><a href="{{url_for('auth.login')}}">Sign In</a></li>
-                    {% endif%}
-                </ul>
-                
-        
+    <div class="container">
+
+    
+        <div class="row">
+            <div class="col-md-2">
+                {% block navbar %}
+                    {% include 'navbar.html' %}
+                {% endblock %}
             </div>
-        </div>
-        <div class="col-md-9">
-            {% block content%}
-            {% endblock%}
+            <div style="margin-left:25px;" class="col-md-10">
+                {% block content %}
+
+                {% endblock %}
+            </div>
         </div>
     </div>
 </body>

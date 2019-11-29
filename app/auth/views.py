@@ -3,7 +3,7 @@ from . import auth
 from ..models import User
 from .. import db
 from .forms import RegForm,LoginForm 
-from flask_login import login_user,login_required
+from flask_login import login_user,login_required,logout_user
 
 
 @auth.route('/login',methods = ["GET","POST"])
@@ -14,7 +14,11 @@ def login():
         user = User.query.filter_by(username = form.username.data).first()
 
         if user is not None and user.verify_password(form.password.data):
+            login_user(user,form.remember.data)
             return redirect(url_for('main.index') or request.args.get('next'))
+
+        flash('invalid Username or Password')
+
     title = 'Blog login'
     return render_template('auth/login.html' ,title=title, loginform = form)
 

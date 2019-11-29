@@ -24,12 +24,14 @@ class User(UserMixin,db.Model):
         return check_password_hash(self.pass_code,password)
 
 
+    
+    def __repr__(self):
+        return f'User {self.username}'
+
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    def __repr__(self):
-        return f'User {self.username}'
 
 
 class Blog(db.Model):
@@ -42,12 +44,12 @@ class Blog(db.Model):
     posted = db.Column(db.DateTime,default = datetime.utcnow)
 
     def save_blog(self):
-        db.session(self)
+        db.session.add(self)
         db.session.commit()
 
     @classmethod
     def get_user_blog(cls,name):
-        blog = Blog.query.filter_by(user = name)
+        blog = Blog.query.filter_by(user = name).all()
 
         return blog
 

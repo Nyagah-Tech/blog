@@ -1,5 +1,6 @@
-<!DOCTYPE html>
 {% extends 'bootstrap/base.html' %}
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,19 +13,14 @@
 </head>
 <body>
     <div class="container">
-
+            
+        {% block navbar %}
+            {% include 'navbar.html' %}
+        {% endblock %}
     
-        <div class="row">
-            <div class="col-md-2">
-                {% block navbar %}
-                    {% include 'navbar.html' %}
-                {% endblock %}
-            </div>
-            <div style="margin-left:25px;" class="col-md-10">
-                {% block content %}
+        {% block content %}
 
-                {% endblock %}
-            </div>
-        </div>
-    </div>
+        {% endblock %}
+
+    </div>            
 </body>

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <a href="/blog/new/{{current_user.username}}" style="margin-top: 20px;"  class="btn btn-primary" >Add new blog</a>
+            <div class="row">
+                {% for blog in bloglist %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-haeder">
+                            {{blog.blog_title}}
+                        </div>
+                        <div class="cerd-body">
+                            {{blog.blog_body}}
+                        </div>
+                       
+                    </div>
+                
+                </div>
+                {% endfor%}
+            </div>
+        
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+   </div>
+{% endblock%}

@@ -2,7 +2,7 @@ from flask import render_template,redirect,url_for,abort
 from . import main
 from flask_login import login_required,current_user
 from ..models import User,Blog
-from .forms import New_blog_form
+from .forms import New_blog_form,CommentForm
 from .. import db
 
 @main.route('/')
@@ -40,3 +40,7 @@ def profile(uname):
     bloglist = Blog.get_user_blog(user.username)
     return render_template("profile/profile.html",user = user, bloglist = bloglist)
 
+@main.route('blog/profile/comment/new/<int:id>', methods=['GET', 'POST'])
+@login_required
+def comment(id):
+    form = co

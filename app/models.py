@@ -68,4 +68,6 @@ class Comment(db.Model):
     posted =db.Column(db.DateTime,default = datetime.utcnow)
 
 
-    
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()    

@@ -58,3 +58,14 @@ class Blog(db.Model):
         blog_list = Blog.query.all()
 
         return blog_list
+
+
+class Comment(db.Model):
+    id = db.Column(db.Integer,primary_key = True)
+    blog_id = db.Column(db.String)
+    user = db.Column(db.String)
+    blog_comment = db.Column(db.String)
+    posted =db.Column(db.DateTime,default = datetime.utcnow)
+
+
+    

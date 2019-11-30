@@ -92,3 +92,13 @@ def update_pic(uname):
         user.profile_path = path
         db.session.commit()
     return redirect(url_for('main.profile',uname = user.username))
+
+
+@main.route('/blog/delete/<int:id>', methods = ['GET','POST'])
+@login_required
+def delete_blog(id):
+    blog = Blog.query.filter_by(id = id).first()
+    Blog.delete_blog(blog)
+
+    return redirect(url_for('main.profile', uname = current_user.username))
+

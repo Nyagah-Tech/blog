@@ -7,7 +7,21 @@
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <center>
-                <img src="{{user.profile_path}}" alt="profile picture" style="border-radius: 50px; width:400px;">
+                {% if user.profile_path %}
+                    <img src="{{url_for('static',filename = user.profile_path)}}" alt="profile picture" style="border-radius: 50px; width:400px;">
+                {% else %}
+                    <p><b><i>No profile picture</i></b></p>
+                {% endif %}
+
+                {% if user == current_user%}
+                    <form action="{{url_for('main.update_pic',uname = user.username)}}" method="post" enctype="multipart/form-data">
+                        <input type="file" name="photo" class="form-control" required>
+                        <input type="submit">
+
+                    </form>
+                {% endif%}
+
+
                 <p style="margin-top: 40px;">{{user.username}}</p>
                 <p style="margin-top: 20px;">{{user.bio}}</p>
             </center>

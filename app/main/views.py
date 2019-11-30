@@ -1,9 +1,9 @@
-from flask import render_template,redirect,url_for,abort
+from flask import render_template,redirect,url_for,abort,request
 from . import main
 from flask_login import login_required,current_user
 from ..models import User,Blog,Comment
 from .forms import New_blog_form,CommentForm,UpdateProfileForm
-from .. import db
+from .. import db,photos
 
 @main.route('/')
 def index():
@@ -47,10 +47,11 @@ def comment(id):
     blog = Blog.query.filter_by(id = id).first()
     if form.validate_on_submit():
         comment = form.body.data
-        new_comment = Comment(user = current_user.username,blog_comment = body,blog_id = blog.id)
+
+        new_comment = Comment(user = current_user.username,blog_comment = comment,blog_id = blog.id)
 
         new_comment.save_comment()
-        return redirect(url_for('.blog',id = pitch.id))
+        return redirect(url_for('.blog',id = blog.id))
 
     title = 'comments'
     return render_template('comment.html',title = title,comment_form =form,blog = blog)
@@ -63,7 +64,7 @@ def blog(id):
     comment = Comment.get_comment(id)
     return render_template('blog.html',blog = blog, comment = comment)
 
-@main.route('/profile/update/<uname>')
+@main.route('/profile/update/<uname>', methods = ['GET','POST'])
 @login_required
 def update_profile(uname):
     user = User.query.filter_by(username = uname).first()
@@ -82,7 +83,12 @@ def update_profile(uname):
     return render_template('profile/updateProf.html',updateForm = form,)
 
 
-@main.route('/profile/<uname>/update/profile/pic/')
+@main.route('/profile/<uname>/update/profile/pic/', methods = ['Post'])
 def update_pic(uname):
     user = User.query.filter_by(username = uname).first()
-    if 'photo'
+    if 'photo' in  request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        user.profile_path = path
+        db.session.commit()
+    return redirect(url_for('main.profile',uname = user.username))

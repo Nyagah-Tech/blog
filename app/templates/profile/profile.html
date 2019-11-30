@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 {% block content %}
-
+<style>
+    img {
+        border-radius: 50%;
+        }
+</style>
 <div class="container">
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <center>
                 {% if user.profile_path %}
-                    <img src="{{url_for('static',filename = user.profile_path)}}" alt="profile picture" style="border-radius: 50px; width:400px;">
+                    <img src="{{url_for('static',filename = user.profile_path)}}" alt="profile picture" border-radius="70px" width="400px" height="400" style="margin-top: 30px">
                 {% else %}
                     <p><b><i>No profile picture</i></b></p>
                 {% endif %}
@@ -16,7 +20,7 @@
                 {% if user == current_user%}
                     <form action="{{url_for('main.update_pic',uname = user.username)}}" method="post" enctype="multipart/form-data">
                         <input type="file" name="photo" class="form-control" required>
-                        <input type="submit">
+                        <input type="submit" style="color: black;">
 
                     </form>
                 {% endif%}
@@ -36,26 +40,42 @@
             
             <div class="row" style="margin-top: 10px;">
                 {% for blog in bloglist %}
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-haeder">
-                            {{blog.blog_title}}
+                    <div class="col-md-6">
+                        <div class="card" style="margin-top:20px; margin-bottom: 30px;">
+                            <div class="card-haeder">
+                                {{blog.blog_title}}
+                            </div>
+                            <div class="cerd-body">
+                                {{blog.blog_body}}
+                            </div>
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <a href="/blog/profile/comment/new/{{blog.id}}" class="btn btn-primary">add coment</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="/blog/{{blog.id}}" class="btn btn-primary">view comments</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="" class="btn btn-danger">delete blog</a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="" class="btn btn-primary">update blog</a>
+                                    </div>
+                                </div>
+                                
+                            </div><br><br>
+                                
+                        
+                        
                         </div>
-                        <div class="cerd-body">
-                            {{blog.blog_body}}
-                        </div>
-                        <div class="card-footer">
-                            <a href="/blog/profile/comment/new/{{blog.id}}">add coment</a>
-                        </div>
-                       
                     </div>
-                
-                </div>
+                   
                 {% endfor%}
             </div>
         
-        </div>
+        </div><br><br>
         <div class="col-md-2"></div>
     </div>
-   </div>
+   </div><br><br>
 {% endblock%}

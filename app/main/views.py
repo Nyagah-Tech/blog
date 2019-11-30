@@ -2,7 +2,7 @@ from flask import render_template,redirect,url_for,abort
 from . import main
 from flask_login import login_required,current_user
 from ..models import User,Blog,Comment
-from .forms import New_blog_form,CommentForm
+from .forms import New_blog_form,CommentForm,UpdateProfileForm
 from .. import db
 
 @main.route('/')
@@ -69,4 +69,14 @@ def update_profile(uname):
     user = User.query.filter_by(username = uname).first()
     if user is None:
         abort(404)
-    
+    form = UpdateProfileForm()
+
+    if form.validate_on_submit():
+        user.bio = form.bio.data
+
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for('.profile', uname = user.username))
+
+    return render_template('profile/updateProf.html',updateForm = form,)

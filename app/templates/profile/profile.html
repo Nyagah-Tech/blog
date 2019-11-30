@@ -6,8 +6,21 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-            <a href="/blog/new/{{current_user.username}}" style="margin-top: 20px;"  class="btn btn-primary" >Add new blog</a>
-            <div class="row">
+            <center>
+                <img src="{{user.profile_path}}" alt="profile picture">
+                <p style="margin-top: 40px;">{{user.username}}</p>
+                <p style="margin-top: 20px;">{{user.bio}}</p>
+            </center>
+           <div class="row" style="margin-top: 50px;">
+               <div class="col-md-6">
+                   <a href="/profile/update/{{current_user.username}}" class="btn btn-primary" >Edit Profile</a>
+               </div>
+               <div class="col-md-6">
+                    <a href="/blog/new/{{current_user.username}}" style="margin-top: 20px;"  class="btn btn-primary" >Add new blog</a>
+               </div>
+           </div>
+            
+            <div class="row" style="margin-top: 10px;">
                 {% for blog in bloglist %}
                 <div class="col-md-4">
                     <div class="card">
@@ -16,6 +29,9 @@
                         </div>
                         <div class="cerd-body">
                             {{blog.blog_body}}
+                        </div>
+                        <div class="card-footer">
+                            <a href="/blog/profile/comment/new/{{blog.id}}">add coment</a>
                         </div>
                        
                     </div>

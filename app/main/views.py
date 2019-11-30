@@ -1,7 +1,7 @@
 from flask import render_template,redirect,url_for,abort
 from . import main
 from flask_login import login_required,current_user
-from ..models import User,Blog
+from ..models import User,Blog,Comment
 from .forms import New_blog_form,CommentForm
 from .. import db
 
@@ -40,7 +40,31 @@ def profile(uname):
     bloglist = Blog.get_user_blog(user.username)
     return render_template("profile/profile.html",user = user, bloglist = bloglist)
 
-@main.route('blog/profile/comment/new/<int:id>', methods=['GET', 'POST'])
+@main.route('/blog/profile/comment/new/<int:id>', methods=['GET', 'POST'])
 @login_required
 def comment(id):
-    form = co
+    form = CommentForm()
+    blog = Blog.query.filter_by(id = id).first()
+    if form.validate_on_submit():
+        comment = form.body.data
+        new_comment = Comment(user = current_user.username,blog_comment = body,blog_id = blog.id)
+
+        new_comment.save_comment()
+        return redirect(url_for('.blog',id = pitch.id))
+
+    title = 'comments'
+    return render_template('comment.html',title = title,comment_form =form,blog = blog)
+
+
+@main.route('/blog/<id>')
+@login_required
+def blog(id):
+    blog = Blog.query.filter_by(id = id).first()
+    comment = Comment.get_comment(id)
+    return render_template('blog.html',blog = blog, comment = comment)
+
+@main.route('/profile/update/<uname>')
+@login_required
+def update_profile(uname):
+    user = User.query.filter_by(username = uname).first()
+    

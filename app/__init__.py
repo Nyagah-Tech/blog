@@ -26,7 +26,7 @@ def create_app(config_name):
     login_manager.init_app(app)
 
     # configure uploadset
-
+    configure_uploads(app,photos)
 
     # register the blueprint
     from .main import main as main_blueprint 

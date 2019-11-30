@@ -80,3 +80,9 @@ def update_profile(uname):
         return redirect(url_for('.profile', uname = user.username))
 
     return render_template('profile/updateProf.html',updateForm = form,)
+
+
+@main.route('/profile/<uname>/update/profile/pic/')
+def update_pic(uname):
+    user = User.query.filter_by(username = uname).first()
+    if 'photo'

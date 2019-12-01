@@ -102,7 +102,7 @@ def delete_blog(id):
 
     return redirect(url_for('main.profile', uname = current_user.username))
 
-@main.route('/blog/update/<int:idd>',methods = ['GET','POST'])
+@main.route('/blog/update/<int:id>',methods = ['GET','POST'])
 @login_required
 def update_blog(id):
     blog = Blog.query.filter_by(id = id).first()
@@ -112,7 +112,7 @@ def update_blog(id):
         blog.blog_title = form.title.data
         blog.blog_body = form.body.data
 
-        db.session.add(pitch)
+        db.session.add(blog)
         db.session.commit()
         return redirect(url_for('main.profile', uname = current_user.username))
 

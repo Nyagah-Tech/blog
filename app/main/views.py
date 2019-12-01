@@ -2,7 +2,7 @@ from flask import render_template,redirect,url_for,abort,request
 from . import main
 from flask_login import login_required,current_user
 from ..models import User,Blog,Comment
-from .forms import New_blog_form,CommentForm,UpdateProfileForm
+from .forms import New_blog_form,CommentForm,UpdateProfileForm,UpdateBlogForm
 from .. import db,photos
 
 @main.route('/')
@@ -101,4 +101,22 @@ def delete_blog(id):
     Blog.delete_blog(blog)
 
     return redirect(url_for('main.profile', uname = current_user.username))
+
+@main.route('/blog/update/<int:idd>',methods = ['GET','POST'])
+@login_required
+def update_blog(id):
+    blog = Blog.query.filter_by(id = id).first()
+    form = UpdateBlogForm()
+
+    if form.validate_on_submit():
+        blog.blog_title = form.title.data
+        blog.blog_body = form.body.data
+
+        db.session.add(pitch)
+        db.session.commit()
+        return redirect(url_for('main.profile', uname = current_user.username))
+
+    return render_template('profile/updateBlog.html',updateblogform = form)
+    
+    
 

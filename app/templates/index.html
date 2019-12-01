@@ -1,5 +1,13 @@
 {% extends 'base.html'%}
 
 {% block content %}
-        <p>welcome</p>
+        <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                        <a href="/user/subcribe/{{current_user.username}}" class="btn btn-primary">Subscribe</a>
+                </div>
+                <div class="col-md-2"></div>
+        </div>
+        
+
 {% endblock%}

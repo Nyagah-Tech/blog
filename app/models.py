@@ -75,6 +75,11 @@ class Comment(db.Model):
     blog_comment = db.Column(db.String)
     posted =db.Column(db.DateTime,default = datetime.utcnow)
 
+    def delete_comment(self):
+        db.session.delete(self)
+        db.session.commit()
+
+
 
     def save_comment(self):
         db.session.add(self)
@@ -85,3 +90,16 @@ class Comment(db.Model):
         comments = Comment.query.filter_by(blog_id = id).all()
 
         return comments   
+
+class Subscribe(db.Model):
+    id =db.Column(db.Integer,primary_key = True)
+    email = db.Column(db.String)
+    username = db.Column(db.String)
+
+    def save_subscribers(self):
+        db.session.add(self)
+        db.session.commit()
+    @classmethod
+    def get_all_email(cls):
+        emails = Subscribe.query.all()
+        return emails

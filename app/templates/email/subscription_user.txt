@@ -1,0 +1,2 @@
+Hello {{emails.username}}..Welcome to your subcription privelleges.This is to inform you that a new blog has been posted 
+in our Blog_Hub application.

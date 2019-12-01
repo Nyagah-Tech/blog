@@ -17,7 +17,14 @@
                <div class="row">
                    {% for com in comment %}
                         <div class="card">
-                            <p>{{com.blog_comment}} <br><i>posted by </i>~{{com.user}}<br> <i>posted on </i> {{com.posted}}</p>
+                            <p>{{com.blog_comment}} <br><i>posted by </i>~{{com.user}}<br> <i>posted on </i> {{com.posted}}
+                                {% if blog.user == current_user.username%}
+                                <a href="/comment/delete/{{com.id}}" class = "btn btn-danger">Delete comment</a>
+                                {% endif %}
+                            </p>
+
+                            
+                            </div>
                         </div>
                     {% endfor%}
                </div>

@@ -1,9 +1,10 @@
 from flask import render_template,redirect,url_for,abort,request
 from . import main
 from flask_login import login_required,current_user
-from ..models import User,Blog,Comment
-from .forms import New_blog_form,CommentForm,UpdateProfileForm,UpdateBlogForm
+from ..models import User,Blog,Comment,Subscribe
+from .forms import New_blog_form,CommentForm,UpdateProfileForm,UpdateBlogForm,Subscribe_Form
 from .. import db,photos
+from ..email import mail_message
 
 @main.route('/')
 def index():
@@ -15,6 +16,7 @@ def index():
 @login_required
 def new_blog(uname):
     user = User.query.filter_by(username = uname).first()
+
     if user is None:
         abort(404)
     form = New_blog_form()
@@ -25,6 +27,11 @@ def new_blog(uname):
         new_blog = Blog(blog_title = title,blog_body = body,user = current_user.username)
 
         new_blog.save_blog()
+        email_list = Subscribe.get_all_email()
+        for emails in email_list:
+            mail_message("Your daily newsfeed","email/subscription_user",emails.email,emails = emails)
+
+
         return redirect(url_for('.profile', uname = current_user.username))
 
     title = 'new pitch'
@@ -119,4 +126,33 @@ def update_blog(id):
     return render_template('profile/updateBlog.html',updateblogform = form)
     
     
+@main.route('/user/subcribe/<uname>')
+@login_required
+def subcribe(uname):
+    user = User.query.filter_by(username = uname).first()
+    if user is None:
+        abort(404)
+    form = Subscribe_Form()
+
+    if form.validate_on_submit():
+        email = form.email.data
+        username= form.username.data
+
+        new_sub = Subscribe(username = username,email = email)
+        return render_template('index.html')
+
+
+    return render_template('subscribe/subscribe.html',subcribeForm = form,user = user)
+
+@main.route('/comment/delete/<int:id>')
+@login_required
+def delete_comment(id):
+    comment = Comment.query.filter_by(id = id).first()
+    
+    Comment.delete_comment(comment)
+
+    return redirect(url_for('.blog', id = comment.blog_id))
+
+
+
 

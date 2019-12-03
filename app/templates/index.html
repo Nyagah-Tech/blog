@@ -1,13 +1,73 @@
 {% extends 'base.html'%}
-
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" type='text/css' href="{{url_for('static',filename = 'index.css')}}">
+{% endblock styles %}
 {% block content %}
-        <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                        <a href="/user/subcribe/{{current_user.username}}" class="btn btn-primary">Subscribe</a>
+<style>
+        body{
+                background-image: url(http://2.bp.blogspot.com/-aLx6MdKQ-Ik/T1jXri7tWrI/AAAAAAAAUzs/n0teoMskuxg/s1600/red-tree-wallpaper-hd.jpg);
+                background-size: cover;
+        }
+
+
+</style>
+<body>
+        <div class="container">
+                <h1 style="text-align: center;font-size: 80px; margin-top: 2em;">Blog-Hub</h1>
+                <div class="row">
+
+                        <div class="col-md-8" style="margin-top: 5em !important; font-size: 18px !important;">
+                                {% for blog in blogs %}
+                                <div class="card" style="width: 70rem; margin-top: 20px; color:grey;">
+                                        <div class="card-body">
+                                                <h3 class="card-subtitle mb-2 text-muted"><b>Title
+                                                        </b>~{{blog.blog_title}}~
+                                                </h3>
+                                                <p class="card-text">{{blog.blog_body}}</p>
+                                                <p class="card-text"><i>posted by: </i>{{blog.user}}</p>
+                                                <p class="card-text"><i>posted on: </i> {{blog.posted}}</p>
+                                        </div>
+                                        <div class="card-footer">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <a href="/blog/profile/comment/new/{{blog.id}}" class="btn btn-primary"><i style="font-size: 15px">add coment</i></a>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <a href="/blog/{{blog.id}}" class="btn btn-primary"><i style="font-size: 15px">view comments</i></a>
+                                                            </div>
+                                                        </div>
+                                    
+                                                    </div><br><br>
+                                    
+                                </div>
+                                {% endfor%}
+
+                        </div>
+
+                        <div class="col-md-4" style="margin-top: 5em !important;font-size: 18px !important; ">
+                                <a href="/user/subcribe/{{current_user.username}}"class="btn btn-primary" style="font-size: 25px;margin-left:180px;">Subscribe</a>
+                                <div class="card" style="background-image: url('https://cdn.pixabay.com/photo/2012/12/09/00/16/smoke-69124_960_720.jpg');height: 450px; margin-left: 30px;margin-top: 20px;">
+                                        
+                                        <h3 style="text-align: center;font-size: 30px; color: white"><b><u>~Quote of the day~</u></b></h3>
+                                        {% for quote in quotes %}
+                                        <p style="margin-top:25px;margin-right: 10px; color:white">
+                                                {{quote.quote}}
+                                        </p><br>
+                                        <p style="text-align: center; color:white"><i>author</i> {{quote.author}}</p>
+                                        
+                                        {% endfor%}
+
+                                </div>
+                                <p style="margin-left: 30px;"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimage.flaticon.com%2Ficons%2Fpng%2F512%2F167%2F167130.png&f=1&nofb=1" alt="" style="height: 300px; width:300px;margin-top:20px"> <b>Write your blogs here</b></p>
+                                <p></p>
+                        </div>
+
                 </div>
-                <div class="col-md-2"></div>
         </div>
-        
+
+</body>
+
 
 {% endblock%}

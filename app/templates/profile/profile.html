@@ -1,81 +1,91 @@
 {% extends 'base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" type='text/css' href="{{url_for('static',filename = 'index.css')}}">
+{% endblock styles %}
 {% block content %}
 <style>
     img {
         border-radius: 50%;
+
+    }
+    body{
+            background-image: url(http://www.technocrazed.com/wp-content/uploads/2015/12/Tree-wallpaper-to-use-as-background-17.jpg);
+            background-size: cover;
         }
 </style>
-<div class="container">
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
+<body>
+<div class="container" style="font-size: 20px !important; ">
+    <div class="row" >
+        <div class="col-md-6" style="margin-top: 80px !important">
             <center>
                 {% if user.profile_path %}
-                    <img src="{{url_for('static',filename = user.profile_path)}}" alt="profile picture" border-radius="70px" width="400px" height="400" style="margin-top: 30px">
+                <img src="{{url_for('static',filename = user.profile_path)}}" alt="profile picture" border-radius="70px"
+                    width="400px" height="400" style="margin-top: 30px">
                 {% else %}
-                    <p><b><i>No profile picture</i></b></p>
+                <p><b><i>No profile picture</i></b></p>
                 {% endif %}
-
+        
                 {% if user == current_user%}
-                    <form action="{{url_for('main.update_pic',uname = user.username)}}" method="post" enctype="multipart/form-data">
-                        <input type="file" name="photo" class="form-control" required>
-                        <input type="submit" style="color: black;">
-
-                    </form>
+                <form action="{{url_for('main.update_pic',uname = user.username)}}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="photo" class="form-control" required style="height: 50px; width:250px">
+                    <input type="submit" style="color: black;">
+        
+                </form>
                 {% endif%}
-
-
-                <p style="margin-top: 40px;">{{user.username}}</p>
-                <p style="margin-top: 20px;">{{user.bio}}</p>
             </center>
-           <div class="row" style="margin-top: 50px;">
-               <div class="col-md-6">
-                   <a href="/profile/update/{{current_user.username}}" class="btn btn-primary" >Edit Profile</a>
-               </div>
-               <div class="col-md-6">
-                    <a href="/blog/new/{{current_user.username}}" style="margin-top: 20px;"  class="btn btn-primary" >Add new blog</a>
-               </div>
-           </div>
-            
-            <div class="row" style="margin-top: 10px;">
-                {% for blog in bloglist %}
-                    <div class="col-md-6">
-                        <div class="card" style="margin-top:20px; margin-bottom: 30px;">
-                            <div class="card-haeder">
-                                {{blog.blog_title}}
-                            </div>
-                            <div class="cerd-body">
-                                {{blog.blog_body}}
-                            </div>
-                            <div class="card-footer">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <a href="/blog/profile/comment/new/{{blog.id}}" class="btn btn-primary">add coment</a>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="/blog/{{blog.id}}" class="btn btn-primary">view comments</a>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="/blog/delete/{{blog.id}}" class="btn btn-danger">delete blog</a>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="/blog/update/{{blog.id}}" class="btn btn-primary">update blog</a>
-                                    </div>
-                                </div>
-                                
-                            </div><br><br>
-                                
-                        
-                        
+        
+        </div>
+        <div class="col-md-6" style="margin-top: 80px !important ; color:silver;" >
+            <p style="margin-top: 40px;font-size: 25px"><b><i>Username: </i></b>{{user.username}}</p>
+            <p style="margin-top: 20px;"><b><i>biography: </i></b>{{user.bio}}</p></b></i></p>
+        </div>
+    </div>
+        <div class="row" style="margin-top: 50px;">
+        <div class="col-md-6">
+            <a href="/profile/update/{{current_user.username}}"class="btn btn-primary" ><b style="font-size: 25px;">Edit Profile</b></a>
+        </div>
+        <div class="col-md-6">
+            <a href="/blog/new/{{current_user.username}}" style="margin-top: 20px;" class="btn btn-primary"><b style="font-size:25px">Add new Blog</b></a>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;">
+        {% for blog in bloglist %}
+        <div class="col-md-6">
+            <div class="card" style="margin-top:20px; margin-bottom: 30px;">
+                <div class="card-haeder">
+                    {{blog.blog_title}}
+                </div>
+                <div class="cerd-body">
+                    {{blog.blog_body}}
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="/blog/profile/comment/new/{{blog.id}}" class="btn btn-primary"><i style="font-size: 15px">add coment</i></a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/blog/{{blog.id}}" class="btn btn-primary"><i style="font-size: 15px">view comments</i></a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/blog/delete/{{blog.id}}" class="btn btn-danger"><i style="font-size: 15px">delete blog</i> </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/blog/update/{{blog.id}}" class="btn btn-primary"><i style="font-size: 15px">update blog</i></a>
                         </div>
                     </div>
-                   
-                {% endfor%}
+
+                </div><br><br>
+
+
+
             </div>
-        
-        </div><br><br>
-        <div class="col-md-2"></div>
+        </div>
+
+        {% endfor%}
     </div>
-   </div><br><br>
-{% endblock%}
+</body>
+
+    {% endblock%}

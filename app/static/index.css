@@ -1,0 +1,13 @@
+body{
+    background-color:silver !important;
+    font-size: 25px;
+}
+.cont{
+    margin-left: 150px;
+    margin-right: 20px;
+}
+.card:hover{
+    -ms-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    transform: scale(1.01);
+}

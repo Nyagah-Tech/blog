@@ -1,10 +1,25 @@
 {% extends 'base.html' %}
+{% block styles %}
+{{super()}}
+
+<link rel="stylesheet" type='text/css' href="{{url_for('static',filename = 'bootstrap.css')}}">
+<link rel="stylesheet" type='text/css' href="{{url_for('static',filename = 'index.css')}}">
+{% endblock styles %}
 {% block content%}
+<style>
+
+        body{
+            background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.newsledge.com%2Fwp-content%2Fuploads%2F2019%2F07%2Fcanon-powershot-cameras.jpg&f=1&nofb=1);
+            background-size: cover;
+        }
+
+</style>
+<body>
     <div class="container">
-        <div class="row">
+        <div class="row" style="margin-top: 90px;">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                <div class="card">
+                <div class="card" style="font-size: 25px;">
                     <div class="card-header">
                         {{blog.blog_title}}
                     </div>
@@ -13,11 +28,11 @@
                     </div>
                 </div>
                <h2 style="text-align: center;"><b>Comments</b></h2> 
-               <a href="/blog/profile/comment/new/{{blog.id}}" class="btn btn-primary">add coment</a>
-               <div class="row">
+               <a href="/blog/profile/comment/new/{{blog.id}}" class="btn btn-primary"><i style="font-size: 25px;">add coment</i></a>
+               <div class="row" style="margin-top: 20px;">
                    {% for com in comment %}
-                        <div class="card">
-                            <p>{{com.blog_comment}} <br><i>posted by </i>~{{com.user}}<br> <i>posted on </i> {{com.posted}}
+                        <div class="card" style="width:860px; height:120px; background-color:black">
+                            <p style="font-size: 20px;color:silver;">{{com.blog_comment}} <br><i>posted by </i>~{{com.user}}<br> <i>posted on </i> {{com.posted}}
                                 {% if blog.user == current_user.username%}
                                 <a href="/comment/delete/{{com.id}}" class = "btn btn-danger">Delete comment</a>
                                 {% endif %}
@@ -32,4 +47,5 @@
             <div class="col-md-2"></div>
         </div>
     </div>
+</body>
 {% endblock%}

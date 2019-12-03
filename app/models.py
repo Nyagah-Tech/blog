@@ -69,6 +69,7 @@ class Blog(db.Model):
 
 
 class Comment(db.Model):
+    __tablename__ = 'comment'
     id = db.Column(db.Integer,primary_key = True)
     blog_id = db.Column(db.String)
     user = db.Column(db.String)
@@ -92,6 +93,7 @@ class Comment(db.Model):
         return comments   
 
 class Subscribe(db.Model):
+    __tablename__ = 'subscribe'
     id =db.Column(db.Integer,primary_key = True)
     email = db.Column(db.String)
     username = db.Column(db.String)
@@ -103,3 +105,10 @@ class Subscribe(db.Model):
     def get_all_email(cls):
         emails = Subscribe.query.all()
         return emails
+
+
+class Quote:
+    def __init__(self,author,quote):
+    
+        self.author = author
+        self.quote = quote

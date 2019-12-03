@@ -1,10 +1,18 @@
-{% extends 'base.html' %}
+
+{% extends 'base.html'%}
 {% import 'bootstrap/wtf.html' as wtf%}
-{% block content %}
-<div class="container">
+{% block content%}
+<div class="container" >
     <div class="row">
         <div class="col-md-2"></div>
-        <div class="col-md-8">
+        <div class="col-md-8" style="font-size: 25px; margin-top: 5em;">
+            {% for message in get_flashed_messages()%}
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{message}}
+                </div>
+            {% endfor%}
+
             {{wtf.quick_form(regform)}}
         </div>
         <div class="col-md-2"></div>

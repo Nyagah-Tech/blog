@@ -1,13 +1,30 @@
 {% extends 'base.html'%}
 {% import 'bootstrap/wtf.html' as wtf %}
+{% block styles %}
+{{super()}}
+
+<link rel="stylesheet" type='text/css' href="{{url_for('static',filename = 'bootstrap.css')}}">
+<link rel="stylesheet" type='text/css' href="{{url_for('static',filename = 'index.css')}}">
+{% endblock styles %}
 {% block content %}
+<style>
+        body{
+             background-image: url(http://www.technocrazed.com/wp-content/uploads/2015/12/Tree-wallpaper-to-use-as-background-17.jpg);
+ 
+            background-size: cover;
+        }
+ 
+ 
+</style>
+<body>
     <div class="container">
         <div class="row">
             <div class="col-md-2"></div>
-            <div class="col-md-8">
+            <div class="col-md-8" style="margin-top: 100px; color:silver; font-size: 27px;">
                 {{wtf.quick_form(updateblogform)}}
             </div>
             <div class="col-md-2"></div>
         </div>
     </div>
+</body>
 {% endblock %}

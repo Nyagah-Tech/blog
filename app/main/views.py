@@ -5,12 +5,17 @@ from ..models import User,Blog,Comment,Subscribe
 from .forms import New_blog_form,CommentForm,UpdateProfileForm,UpdateBlogForm,Subscribe_Form
 from .. import db,photos
 from ..email import mail_message
+from ..requests import get_quotes
 
 @main.route('/')
 def index():
     title ="home"
 
-    return render_template('index.html',title=title)
+    quotes = get_quotes()
+
+    blogs = Blog.get_all_blog()
+
+    return render_template('index.html',title=title,quotes =quotes,blogs = blogs)
 
 @main.route('/blog/new/<uname>', methods = ['GET','POST'])
 @login_required
@@ -126,7 +131,7 @@ def update_blog(id):
     return render_template('profile/updateBlog.html',updateblogform = form)
     
     
-@main.route('/user/subcribe/<uname>')
+@main.route('/user/subcribe/<uname>', methods = ['GET','POST'])
 @login_required
 def subcribe(uname):
     user = User.query.filter_by(username = uname).first()
@@ -139,7 +144,10 @@ def subcribe(uname):
         username= form.username.data
 
         new_sub = Subscribe(username = username,email = email)
-        return render_template('index.html')
+        db.session.add(new_sub)
+        db.session.commit()
+
+        return redirect(url_for('.index'))
 
 
     return render_template('subscribe/subscribe.html',subcribeForm = form,user = user)

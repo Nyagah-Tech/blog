@@ -4,6 +4,8 @@
 this is an apllication that enables users to share blog all over the world.this application gives a platform for both a writer
 and a user.the user can view blogs while a writer can delete the blog as well as demotivating comment.
 
+you can get the live application at https://hubblog.herokuapp.com/
+
 
 
 ## Requirements for installation
